@@ -28,13 +28,21 @@
   (setq kw  (getkword "\nInclude Z value? [Yes/No] <No>: ")
         xyz (if (or (null kw) (= kw "No")) nil T))
 
-  ;; Helper: get the true (x y z) for point-number string, or NIL
-  (defun ax-upcon-getCoord (ptext / sset ent coord)
+  ;; Helper: get the true (x y z) for point-number string near XY, or NIL
+  (defun ax-upcon-getCoord (ptext xy / sset ent coord)
     (setq sset
           (ssget "X"
                  (list (cons 0 "TEXT")
                        (cons 8 "Z-POINTNUMBER")
-                       (cons 1 ptext))))
+                       (cons 1 ptext)
+                       (cons -4 "=,=")
+                       (cons 10 xy))))
+    (if (or (null sset) (= (sslength sset) 0))
+      (setq sset
+            (ssget "X"
+                   (list (cons 0 "TEXT")
+                         (cons 8 "Z-POINTNUMBER")
+                         (cons 1 ptext)))))
     (if (and sset (> (sslength sset) 0))
       (progn
         (setq ent   (ssname sset 0)
@@ -112,8 +120,8 @@
     (setq coord nil
           pt (cdr pr))
     (cond
-      (xyz 
-       (setq coord (ax-upcon-getCoord (itoa (car pr)))))
+      (xyz
+       (setq coord (ax-upcon-getCoord (itoa (car pr)) pt)))
       ((and pt (> (length pt) 1))
        (setq coord (list (car pt) (car (cdr pt)) 0.0)))
       (t 
