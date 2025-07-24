@@ -28,13 +28,21 @@
   (setq kw  (getkword "\nInclude Z value? [Yes/No] <No>: ")
         xyz (if (or (null kw) (= kw "No")) nil T))
 
-  ;; Helper: get the true (x y z) for point-number string, or NIL
-  (defun ax-upcon-getCoord (ptext / sset ent coord)
+  ;; Helper: get the true (x y z) for point-number string near XY, or NIL
+  (defun ax-upcon-getCoord (ptext xy / sset ent coord)
     (setq sset
           (ssget "X"
                  (list (cons 0 "TEXT")
                        (cons 8 "Z-POINTNUMBER")
-                       (cons 1 ptext))))
+                       (cons 1 ptext)
+                       (cons -4 "=,=")
+                       (cons 10 xy))))
+    (if (or (null sset) (= (sslength sset) 0))
+      (setq sset
+            (ssget "X"
+                   (list (cons 0 "TEXT")
+                         (cons 8 "Z-POINTNUMBER")
+                         (cons 1 ptext)))))
     (if (and sset (> (sslength sset) 0))
       (progn
         (setq ent   (ssname sset 0)
@@ -102,18 +110,18 @@
       (progn (prompt "\nFewer than two unique point-numbers.") (exit)))
 
   ;; STEP 5: build vertex list with or without Z
-  (setq vtxL '())
-  (foreach pr chosen
-    (setq coord
-          (if xyz
-              (ax-upcon-getCoord (itoa (car pr)))
-              (progn
-                (setq pt (cdr pr))
-                (if (and pt (>= (length pt) 2))
-                    (list (car pt) (cadr pt) 0.0)
-                    (progn
-                      (princ (strcat "\nWarning: Invalid point data for number " (itoa (car pr))))
-                      nil)))))
+    (setq vtxL '())
+    (foreach pr chosen
+      (setq coord
+            (if xyz
+                (ax-upcon-getCoord (itoa (car pr)) (cdr pr))
+                (progn
+                  (setq pt (cdr pr))
+                  (if (and pt (>= (length pt) 2))
+                      (list (car pt) (cadr pt) 0.0)
+                      (progn
+                        (princ (strcat "\nWarning: Invalid point data for number " (itoa (car pr))))
+                        nil)))))
     (if coord
       (setq vtxL (cons (l+transw2c coord) vtxL))))
   (setq vtxL (reverse vtxL))
