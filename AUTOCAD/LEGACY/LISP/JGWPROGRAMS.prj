@@ -1,0 +1,45 @@
+;;; VLisp project file [V2.0] JGWPROGRAMS saved to:[C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP] at:[7/24/25] 
+(VLISP-PROJECT-LIST
+  :NAME
+  JGWPROGRAMS
+  :OWN-LIST
+  ("C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/Area Calc Simple"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/bearing distance polyline"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/BendTable with bubbles"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/cleandwg"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/COGO"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/convertxt"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/Crossing Block Generator V3"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/CrossingExtractor2"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/deletedatalinks"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/DimPerp"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/FNC"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/Freehold Area Calcs"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/Hybrid format table"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/Induction FormatTable"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/iop maker"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/metersToFeet"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/Perpendicular Tolerance Check v2"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/rdtxt"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/Rename Layouts"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/renumbercrossings v2"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/RENUMBERWORKSPACE V1"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/SetRevState"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/sumvalue"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/Surface Impact Fortmating"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/Tie"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/UPCON"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/utm2ll"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/Well cord format table"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/Workspace format table"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/WORKSPACEEXPORT")
+  :FAS-DIRECTORY
+  nil
+  :TMP-DIRECTORY
+  nil
+  :PROJECT-KEYS
+  (:BUILD (:standard))
+  :CONTEXT-ID
+  :AUTOLISP
+)
+;;; EOF
