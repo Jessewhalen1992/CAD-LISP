@@ -2,7 +2,7 @@
                    deltaChar angleStr radiusStr arcStr textStr insPt)
 
   ;; -- Utility Functions --
-  (defun rtd (x) (* 180.0 (/ x pi)))  ; radians -> degrees
+  (defun curve-rtd (x) (* 180.0 (/ x pi)))  ; radians -> degrees
   (defun round-to-nearest-5 (val)
     "Rounds VAL (in seconds) to the nearest 5."
     (* 5 (fix (/ (+ val 2.5) 5))))
@@ -34,7 +34,7 @@
       (setq arcLen (* rad angRad))
 
       ;; Convert radians to degrees, then D/M/S
-      (setq angDeg (rtd angRad))
+      (setq angDeg (curve-rtd angRad))
       (setq d (fix angDeg))
       (setq m (fix (* 60.0 (- angDeg d))))
       (setq s (* 3600.0 (- angDeg d (/ m 60.0))))

@@ -218,7 +218,7 @@
 	)	
       )
 
-      (command "._scale" ss "" (l+transw2c base nil) scalef);ucs wcs
+      (command "._scale" ss "" (utm-transw2c base nil) scalef);ucs wcs
 
       ;dealing with Dimensions and Leaders and Annotative:
       ;(repeat (sslength ss)
@@ -587,7 +587,7 @@
   (trans point 1 0 vector)
 )
 ;----------------
-(defun l+transW2C (point vector /)
+(defun utm-transW2C (point vector /)
   (trans point 0 1 vector)
 )
 ;-------------------------------------
@@ -653,7 +653,7 @@
   ;--
   (setq ccolor (l+getutmcolor  nil)
 	cscale (l+getutmscale  nil)
-	cbase  (l+transw2c (l+getutmbase   nil) nil)
+	cbase  (utm-transw2c (l+getutmbase   nil) nil)
 	cstatus(l+getutmstatus nil)
 	newstatus cstatus
   )

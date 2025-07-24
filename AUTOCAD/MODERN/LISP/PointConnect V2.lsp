@@ -21,8 +21,8 @@
 (setq PCONpath  "C:/AUTOCAD-SETUP/Lisp_2000/PCON.csv")
 ;------------------------------------------------------------------------------
 (defun c:PCON (/ points	xyz pointlist list1 str	list2 from to curpoint p coord
-	       String2List getcoord getcoordNEZD
-	       *error*
+	       String2List ax-pointconnect-getCoord getcoordNEZD
+	       pointconnect-error pointconnect-old-error
 	      )
   (l+begin1)
 
@@ -41,7 +41,7 @@
   )
 
   
-  (defun getcoord (ptext xyz / sset en coord)
+  (defun ax-pointconnect-getCoord (ptext xyz / sset en coord)
     (setq sset (ssget "X"
 		      (list (cons 0 "TEXT")
 			    (cons 8 "Z-POINTNUMBER")
@@ -155,11 +155,11 @@
 	     (command "._PLINE")
 	   )
 	   (foreach p pointlist
-	     (setq coord (getcoord     (itoa p) xyz)
+	     (setq coord (ax-pointconnect-getCoord     (itoa p) xyz)
 		   coord (if coord coord (getcoordNEZD (itoa p) xyz))
 	     )
 
-	     (if coord (setq coord (l+transw2c coord nil)))
+	     (if coord (setq coord (pcon-transw2c coord nil)))
 	     
 	     (if coord
 	       (command "_non" coord)
@@ -375,7 +375,7 @@
   (foreach ar res
     (setq inspo (car ar))
     (if xyz nil (setq inspo (list (car inspo)(cadr inspo))))
-    (setq inspo (l+transw2c inspo nil))    
+    (setq inspo (pcon-transw2c inspo nil))    
     (command "_non" inspo)
   )
 
@@ -442,10 +442,12 @@
 ;ERROR HANDLE FUNCTIONS ------------------------------------
 (defun l+begin1 (/)
   (command-s "_.undo" "_begin")
+
+  (setq pointconnect-old-error *error* *error* pointconnect-error)
   
-  (defun *error* (msg /)
+  (defun pointconnect-error (msg /)
     (if command-s
-      (command-s "_.undo" "_end")	      
+      (command-s "_.undo" "_end")
       (command "_.undo" "_back" "_.undo" "_end")
     )        
     
@@ -454,13 +456,14 @@
     )
     (setvar "osnapcoord" 1)
     (princ)
-  );defun *error*
+  );defun pointconnect-error
 )
   
   
 ;------------------------------------
-(defun l+end1 ()  
-  (command "_.undo" "_end")  
+(defun l+end1 ()
+  (command "_.undo" "_end")
+  (setq *error* pointconnect-old-error)
   (princ)
 )
 ;----------------------------
@@ -549,7 +552,7 @@
   (trans point 1 0 vector)
 )
 ;----------------
-(defun l+transW2C (point vector /)
+(defun pcon-transW2C (point vector /)
   (trans point 0 1 vector)
 )
 ;-------------------

@@ -9,10 +9,10 @@
   ;; -------------------------------------------------------------------------
 
   ;; Convert degrees to radians
-  (defun dtr (a) (* pi (/ a 180.0)))
+  (defun bendtable-dtr (a) (* pi (/ a 180.0)))
 
   ;; Convert radians to degrees
-  (defun rtd (a) (/ (* a 180.0) pi))
+  (defun bendtable-rtd (a) (/ (* a 180.0) pi))
 
   ;; Cross product to determine turn direction
   (defun crossProduct (p1 p2 p3)
@@ -113,7 +113,7 @@
     (setq ang (angDiff prevAng nextAng))
 
     ;; Convert angle to degrees
-    (setq angDegrees (rtd ang))
+    (setq angDegrees (bendtable-rtd ang))
 
     ;; If bend exceeds threshold, record it
     (if (and nextPt (> angDegrees angleThreshold))
