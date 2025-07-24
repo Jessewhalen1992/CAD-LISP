@@ -12,7 +12,7 @@
 
 (defun c:UPCON ( / upcon-error upcon-old-error kw xyz dEnt dStr dPt
                    ssDesc pairL dupSel n pr chosen
-                   vtxL coord el i pt)
+                   vtxL coord el i pt entry)
 
   ;; Generic error handler
   (defun upcon-error (msg)
@@ -91,13 +91,18 @@
   (if (< (length pairL) 2)
       (progn (prompt "\nNeed at least two description/number pairs.") (exit)))
 
-  ;; STEP 4: remove duplicate point-numbers (keep first sorted)
-  (setq pairL  (vl-sort pairL '(lambda(a b) (< (car a) (car b))))
+  ;; STEP 4: remove duplicate point-numbers keeping the one
+  ;; nearest the originally selected description
+  (setq pairL  (vl-sort pairL '(lambda (a b) (< (car a) (car b))))
         chosen '())
   (foreach pr pairL
-    (if (not (assoc (car pr) chosen))
-      (setq chosen (cons pr chosen))))
-  (setq chosen (reverse chosen))
+    (setq entry (assoc (car pr) chosen))
+    (cond
+      ((null entry)
+       (setq chosen (cons pr chosen)))
+      ((> (distance dPt (cdr entry)) (distance dPt (cdr pr)))
+       (setq chosen (subst pr entry chosen)))))
+  (setq chosen (vl-sort chosen '(lambda (a b) (< (car a) (car b)))) )
   (if (< (length chosen) 2)
       (progn (prompt "\nFewer than two unique point-numbers.") (exit)))
 
