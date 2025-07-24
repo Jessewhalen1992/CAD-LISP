@@ -1,7 +1,7 @@
 (defun C:BT (/ plObj plPoints i ang nextAng prevAng lastPt thisPt nextPt dir angleStr station dist distStr
                   tableRow rowHeight insertionPoint tableObj angleThreshold bendCount blockName blockRefObj
                   blockInsertionPoint attributeObj attributesList rowCount colCount rowIndex colIndex cellValue
-                  roundedValue newValue quotient remainder deg min minStr angDegrees direction diff attValue
+                 roundedValue newValue quotient remainder deg myMin minStr angDegrees direction diff attValue
                   headingBlockName headingBlockRefObj headingAttributesList sel remainderStr frac)
 
   ;; -------------------------------------------------------------------------
@@ -20,29 +20,29 @@
        (* (- (nth 1 p2) (nth 1 p1)) (- (nth 0 p3) (nth 0 p1)))))
 
   ;; ----> UPDATED angToStr function with rounding <----
-  (defun angToStr (ang / deg frac min)
+  (defun angToStr (ang / deg frac myMin)
     ;; Separate the integer degrees from the fractional part
     (setq deg  (fix ang))
     (setq frac (- ang deg))
 
     ;; Convert fractional part to minutes
-    (setq min (* 60.0 frac))
+    (setq myMin (* 60.0 frac))
 
     ;; Round minutes
-    (setq min (fix (+ 0.5 min)))
+    (setq myMin (fix (+ 0.5 myMin)))
 
     ;; If rounding minutes hits 60, bump degrees
-    (if (>= min 60)
+    (if (>= myMin 60)
       (progn
         (setq deg (1+ deg))
-        (setq min (- min 60))
+        (setq myMin (- myMin 60))
       )
     )
 
     ;; Zero-pad single-digit minutes
-    (setq minStr (if (< min 10)
-                     (strcat "0" (itoa min))
-                     (itoa min)))
+    (setq minStr (if (< myMin 10)
+                     (strcat "0" (itoa myMin))
+                     (itoa myMin)))
 
     ;; Return something like 19%%D05'
     (strcat (itoa deg) "%%D" minStr "'")

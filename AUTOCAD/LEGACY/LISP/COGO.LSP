@@ -121,7 +121,6 @@
             (setq currentPt nextPt
                   prevAng   angIn))))
       )
-    )
     ;; restore vars
     (setvar "CMDECHO" oldCMDECHO)
     (setvar "DYNMODE"  oldDYNMODE))

@@ -3,9 +3,11 @@
 ;; No fancy predicates, works on any AutoCAD 2000-present
 ;; ======================================================================
 
+(defun sqm->ha (a) (/ a 10000.0))
+(defun sqm->ac (a) (/ a 4046.8564224))
+(defun round-str (v d) (rtos v 2 d))
+
 (defun c:AREACALC ( /
-        ;; helper fns
-        sqm->ha sqm->ac round-str
         ;; selections
         ssBoundary ssDispo ssCut ssWet
         ;; objects
@@ -24,9 +26,6 @@
   ;; basic helpers
   ;; ---------------------------------------------------------------
   (vl-load-com)
-  (defun sqm->ha (a) (/ a 10000.0))
-  (defun sqm->ac (a) (/ a 4046.8564224))
-  (defun round-str (v d) (rtos v 2 d))
 
   (prompt "\n=== Area Calculation Started ===")
 

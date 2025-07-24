@@ -1,8 +1,8 @@
 (defun c:BPL (/ pl ent i pt1 pt2 lineAngle textAngle bearingAngle angleDegrees totalSeconds dist bearing
-                 textPos bearingPos distancePos degrees minutes seconds pi numSegments
+                 textPos bearingPos distancePos degrees minutes seconds myPi numSegments
                  originalClosedFlag layerName distanceTextResult bearingTextResult
                  textEntitiesToDelete positionOption dx dy offsetAngle flipped)
-  (setq pi (* 4 (atan 1.0))) ; Define pi
+  (setq myPi (* 4 (atan 1.0))) ; Define myPi
  
  ;; UTM check logic
   (if (l+getUTMstatus nil)
@@ -77,12 +77,12 @@
             (setq lineAngle (atan dy dx))
 
             ;; Calculate bearing angle from North, measured clockwise
-            (setq bearingAngle (- (/ pi 2) lineAngle))
+            (setq bearingAngle (- (/ myPi 2) lineAngle))
             (if (< bearingAngle 0)
-                (setq bearingAngle (+ bearingAngle (* 2 pi))))
+                (setq bearingAngle (+ bearingAngle (* 2 myPi))))
 
             ;; Convert bearingAngle to degrees/minutes/seconds
-            (setq angleDegrees (* bearingAngle (/ 180.0 pi)))
+            (setq angleDegrees (* bearingAngle (/ 180.0 myPi)))
             (setq totalSeconds (+ 0.5 (* angleDegrees 3600.0)))
             (setq degrees (fix (/ totalSeconds 3600.0)))
             (setq minutes (fix (/ (- totalSeconds (* degrees 3600.0)) 60.0)))
@@ -111,27 +111,27 @@
             (setq textAngle lineAngle)
             (setq flipped nil)
             (cond
-              ((> textAngle (/ pi 2)) 
-               (setq textAngle (- textAngle pi))
+              ((> textAngle (/ myPi 2)) 
+               (setq textAngle (- textAngle myPi))
                (setq flipped t)
               )
-              ((< textAngle (- (/ pi 2)))
-               (setq textAngle (+ textAngle pi))
+              ((< textAngle (- (/ myPi 2)))
+               (setq textAngle (+ textAngle myPi))
                (setq flipped t)
               )
             )
 
             ;; Determine offset angle based on Above/Below:
-            ;; Above = lineAngle + 90° (pi/2)
-            ;; Below = lineAngle - 90° (pi/2)
+            ;; Above = lineAngle + 90° (myPi/2)
+            ;; Below = lineAngle - 90° (myPi/2)
             (setq offsetAngle (if (equal positionOption "Above")
-                                  (+ lineAngle (/ pi 2))
-                                  (- lineAngle (/ pi 2))
+                                  (+ lineAngle (/ myPi 2))
+                                  (- lineAngle (/ myPi 2))
                                 ))
 
-            ;; If we flipped the text angle by pi, also flip the offset by pi to maintain correct side
+            ;; If we flipped the text angle by myPi, also flip the offset by myPi to maintain correct side
             (if flipped
-              (setq offsetAngle (+ offsetAngle pi))
+              (setq offsetAngle (+ offsetAngle myPi))
             )
 
             ;; Fixed distances
