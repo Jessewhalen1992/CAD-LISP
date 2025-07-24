@@ -223,9 +223,9 @@
 	miny (- miny ext)
 	maxy (+ maxy ext)
 	btmleft (list minx miny 0.)
-	btmleft (l+transw2c btmleft nil)
+	btmleft (gtech-transw2c btmleft nil)
 	topright(list maxx maxy 0.)
-	topright (l+transw2c topright nil)
+	topright (gtech-transw2c topright nil)
   )
 
   ;Zoom all the pline:
@@ -596,7 +596,7 @@
 	  
 	  (command "._-INSERT"
 		   "nezd point.dwg"		   
-		   (l+transw2c inspo nil)
+		   (gtech-transw2c inspo nil)
 		   1		   
 	  )
 
@@ -669,7 +669,7 @@
 	  (command "._-INSERT"
 		   (strcat path bn)
 		   
-		   (l+transw2c inspo nil)
+		   (gtech-transw2c inspo nil)
 		   5
 		   ""
 		   ""
@@ -1333,7 +1333,7 @@
   (trans point 1 0 vector)
 )
 ;----------------
-(defun l+transW2C (point vector /)
+(defun gtech-transW2C (point vector /)
   (trans point 0 1 vector)
 )
 ;------------------------------------------------------------

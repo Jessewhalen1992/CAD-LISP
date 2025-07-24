@@ -39,12 +39,12 @@
   (/ (* rad 180.0) pi)
 )
 ;; For backward compatibility, provide DTR and RTD if used in older code
-(defun DTR (a) (deg2rad a))
-(defun RTD (a) (rad2deg a))
+(defun utils-dtr (a) (deg2rad a))
+(defun utils-rtd (a) (rad2deg a))
 
 (defun bearing->angle (bearStr / str deg min sec partAngle azDeg)
   "Convert a bearing string (e.g., \"N45d30'0\\\"E\") to an absolute angle in radians (AutoCAD's standard angle measure).
-Returns the angle measured from East (0° East, counter-clockwise positive) as a radians value."
+Returns the angle measured from East (0Â° East, counter-clockwise positive) as a radians value."
   ;; Normalize input string: remove spaces and uppercase for consistent parsing
   (setq str (strcase (vl-string-trim " " bearStr)))
   (if (not (and (> (strlen str) 2)
@@ -107,7 +107,7 @@ The input angle is assumed to be measured from East (0 at East, CCW positive)."
   ;; Determine quadrant and internal angleD (0 to 90 degrees within that quadrant)
   (cond
     ((or (>= degN 360.0) (< degN 1e-8))  ; close to 0 or 360 -> due North
-      (setq firstChar "N" secondChar "E" angleD 0.0)  ; represent as N0°0'0"E (due North)
+      (setq firstChar "N" secondChar "E" angleD 0.0)  ; represent as N0Â°0'0"E (due North)
     )
     ((<= degN 90.0)
       (setq firstChar "N" secondChar "E" angleD degN)

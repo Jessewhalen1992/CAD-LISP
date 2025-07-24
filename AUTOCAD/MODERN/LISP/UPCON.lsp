@@ -10,15 +10,18 @@
   (trans pt 0 1)
 )
 
-(defun c:UPCON ( / *error* kw xyz dEnt dStr dPt
+(defun c:UPCON ( / upcon-error upcon-old-error kw xyz dEnt dStr dPt
                    ssDesc pairL dupSel n pr chosen
                    vtxL coord el i pt)
 
   ;; Generic error handler
-  (defun *error* (msg)
+  (defun upcon-error (msg)
     (if (and msg (/= msg "Function cancelled"))
       (princ (strcat "\nError: " msg)))
+    (setq *error* upcon-old-error)
+    (if upcon-old-error (upcon-old-error msg))
     (princ))
+  (setq upcon-old-error *error* *error* upcon-error)
 
   ;; Ask whether to include Z values
   (initget "Yes No")
@@ -26,7 +29,7 @@
         xyz (if (or (null kw) (= kw "No")) nil T))
 
   ;; Helper: get the true (x y z) for point-number string, or NIL
-  (defun getCoord (ptext / sset ent coord)
+  (defun ax-upcon-getCoord (ptext / sset ent coord)
     (setq sset
           (ssget "X"
                  (list (cons 0 "TEXT")
@@ -105,7 +108,7 @@
           pt (cdr pr))
     (cond
       (xyz 
-       (setq coord (getCoord (itoa (car pr)))))
+       (setq coord (ax-upcon-getCoord (itoa (car pr)))))
       ((and pt (> (length pt) 1))
        (setq coord (list (car pt) (car (cdr pt)) 0.0)))
       (t 
@@ -123,6 +126,7 @@
     (command "_non" pt))
   (command "")
   (prompt (strcat "\nDone - " (itoa (length vtxL)) " points."))
+  (setq *error* upcon-old-error)
   (princ)
 )
 

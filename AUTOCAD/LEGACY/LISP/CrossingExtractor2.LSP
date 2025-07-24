@@ -17,7 +17,7 @@
 	    )
   (vl-load-com)
   
-  (defun parse-crossing-attribute (crossing)
+  (defun ce2-parse-crossing-attribute (crossing)
     (if (= (substr crossing 1 1) "X")
       (setq crossing (substr crossing 2))
     )
@@ -76,7 +76,7 @@
   (setq
     attdata (vl-sort attdata
                      (function (lambda (e1 e2)
-                                 (< (parse-crossing-attribute (car e1)) (parse-crossing-attribute (car e2)))
+                                 (< (ce2-parse-crossing-attribute (car e1)) (ce2-parse-crossing-attribute (car e2)))
                                )
                      )
            )
