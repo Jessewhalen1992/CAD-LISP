@@ -10,4 +10,5 @@
   - UTILS2025.lsp: `DTR`/`RTD` -> `utils-dtr`/`utils-rtd`.
   - PointConnect V2.lsp: `getcoord` -> `ax-pointconnect-getCoord`, added `pointconnect-error` handler and prefix UCS transform function.
   - GTECH.LSP and JTB UTM Tool.LSP: renamed UCS transform routines to `gtech-transW2C` and `utm-transW2C`.
+  - UPCON.lsp: duplicate point-numbers now resolved by choosing the description closest to the initial selection.
 
