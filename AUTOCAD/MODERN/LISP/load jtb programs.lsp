@@ -1,3 +1,0 @@
-(command "NETLOAD""C:/Users/Work Test 2/AppData/Roaming/Autodesk/ApplicationPlugins/JTBCoordinateProgram.bundle/Contents/Windows/JTBCoordinateProgram2013-15.dll")
-(command "NETLOAD""C:/Users/Work Test 2/AppData/Roaming/Autodesk/ApplicationPlugins/JTB NEZD Point.bundle/Contents/Windows/JTB NEZD Point 2013.dll")
-(command "NETLOAD""C:/Users/Work Test 2/AppData/Roaming/Autodesk/ApplicationPlugins/JTB Legend.bundle/Contents/Windows/JTB Legend 2013.DLL")

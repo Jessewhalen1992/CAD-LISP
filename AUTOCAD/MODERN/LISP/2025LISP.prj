@@ -1,0 +1,74 @@
+;;; VLisp project file [V2.0] 2025LISP saved to:[C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP] at:[7/28/25] 
+(VLISP-PROJECT-LIST
+  :NAME
+  2025LISP
+  :OWN-LIST
+  ("C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/ModernNetload"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/st"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/SECTRIM"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/sumvalue"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/Area Calc Simple"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/AutoSaveonOpen"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/BendTable with bubbles"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/BlockInsert"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/cleandwg"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/closure"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/COGO"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/convertxt"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/Crossing Block Generator V3"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/CrossingExtractor"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/CrossingExtractor2"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/crown"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/CURVE"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/DeleteBlocks"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/deletedatalinks"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/dimmask"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/DimPerp"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/FNC"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/Freehold Area Calcs"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/GTECH"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/Hybrid format table"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/Induction FormatTable"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/iop maker"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/JTB UTM Tool"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/layer draw order"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/LINEBRK"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/metersToFeet"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/Non UTM Command"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/Perpendicular Tolerance Check v2"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/PEXPORT"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/PIPEBRKLINE"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/PointConnect V2"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/QSLAB2"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/QSLAB3"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/rdtxt"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/Rename Layouts"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/renumbercrossings v2"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/RENUMBERWORKSPACE V1"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/SetRevState"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/Surface Impact Fortmating"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/swaptxt"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/SYSMINS"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/t2m"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/Tie"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/TLAB"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/tm4"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/tro"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/txt2blk"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/UPCON"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/UTILS2025"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/utm close"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/utm2ll"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/Well cord format table"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/Workspace format table"
+    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/MODERN/LISP/WORKSPACEEXPORT")
+  :FAS-DIRECTORY
+  nil
+  :TMP-DIRECTORY
+  nil
+  :PROJECT-KEYS
+  (:BUILD (:standard) :MERGED T :SAFE-MODE T :MSGLEVEL 1)
+  :CONTEXT-ID
+  :AUTOLISP
+)
+;;; EOF

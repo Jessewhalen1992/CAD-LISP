@@ -1,18 +1,22 @@
 ;====================================================================
 ; UPCON.LSP – Connect Z-DESCRIPTION notes to Z-POINTNUMBERs
 ; rev 2025-07-14 – removed WHEN, exact matching, optional 3DPOLY
+; rev 2025-07-25 – helper renamed to avoid DLL clash
 ;====================================================================
 
 (vl-load-com)
 
-;; Transform World coordinates → Current UCS
-(defun l+transw2c (pt)
+;; -------------------  helper  -------------------
+;;  World → Current UCS  (renamed from L+TRANSW2C)
+;;  ------------------------------------------------
+(defun upcon-transw2c   ; ► new unique name
+       (pt)             ;   still takes one argument
   (trans pt 0 1)
 )
 
-(defun c:UPCON ( / upcon-error upcon-old-error kw xyz dEnt dStr dPt
-                   ssDesc pairL dupSel n pr chosen
-                   vtxL coord el i pt entry)
+(defun c:UPCON
+       ( / upcon-error upcon-old-error kw xyz dEnt dStr dPt
+          ssDesc pairL dupSel n pr chosen vtxL coord el i pt)
 
   ;; Generic error handler
   (defun upcon-error (msg)
@@ -91,6 +95,7 @@
                          (cons 8 "Z-POINTNUMBER")
                          (cons -4 "=,=")
                          (cons 10 (cdr (assoc 10 el))))))
+
     (if (and dupSel (> (sslength dupSel) 0))
       (progn
         (setq n     (atoi (cdr (assoc 1 (entget (ssname dupSel 0))))))
@@ -99,35 +104,33 @@
   (if (< (length pairL) 2)
       (progn (prompt "\nNeed at least two description/number pairs.") (exit)))
 
-  ;; STEP 4: remove duplicate point-numbers keeping the one
-  ;; nearest the originally selected description
-  (setq pairL  (vl-sort pairL '(lambda (a b) (< (car a) (car b))))
+  ;; STEP 4: remove duplicate point-numbers (keep first sorted)
+  (setq pairL  (vl-sort pairL '(lambda(a b) (< (car a) (car b))))
         chosen '())
   (foreach pr pairL
-    (setq entry (assoc (car pr) chosen))
-    (cond
-      ((null entry)
-       (setq chosen (cons pr chosen)))
-      ((> (distance dPt (cdr entry)) (distance dPt (cdr pr)))
-       (setq chosen (subst pr entry chosen)))))
-  (setq chosen (vl-sort chosen '(lambda (a b) (< (car a) (car b)))) )
+    (if (not (assoc (car pr) chosen))
+      (setq chosen (cons pr chosen))))
+  (setq chosen (reverse chosen))
   (if (< (length chosen) 2)
       (progn (prompt "\nFewer than two unique point-numbers.") (exit)))
 
   ;; STEP 5: build vertex list with or without Z
   (setq vtxL '())
   (foreach pr chosen
-    (setq coord nil
-          pt (cdr pr))
-    (cond
-      (xyz
-       (setq coord (ax-upcon-getCoord (itoa (car pr)) pt)))
-      ((and pt (> (length pt) 1))
-       (setq coord (list (car pt) (car (cdr pt)) 0.0)))
-      (t 
-       (princ (strcat "\nWarning: Invalid point data for number " (itoa (car pr))))))
+    (setq coord
+          (if xyz
+              (ax-upcon-getCoord (itoa (car pr)) (cdr pr))
+              (progn
+                (setq pt (cdr pr))
+                (if (and pt (>= (length pt) 2))
+                    (list (car pt) (cadr pt) 0.0)
+                    (progn
+                      (princ (strcat "\nWarning: Invalid point data for number " (itoa (car pr))))
+                      nil)))))
     (if coord
-      (setq vtxL (cons (l+transw2c coord) vtxL))))
+      (setq vtxL
+            (cons (upcon-transw2c coord)   ; ► renamed call here
+                  vtxL))))
   (setq vtxL (reverse vtxL))
   (if (< (length vtxL) 2)
       (progn (prompt "\nInsufficient valid vertices – nothing drawn.") (exit)))

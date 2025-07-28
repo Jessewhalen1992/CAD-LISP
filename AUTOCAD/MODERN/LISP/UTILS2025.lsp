@@ -20,6 +20,33 @@
 
 (vl-load-com)  ; Load ActiveX support (Visual LISP)
 
+;; ------------------------------------------------------------------
+;; Startup tweak – force REV‑CLOUD settings
+;;   * Arc length = 10  (all versions)
+;;   * Variance  = OFF (uniform arcs)
+;; ------------------------------------------------------------------
+(defun set-revcloud-arc-10 ( / )
+  ;; AutoCAD 2021 + – single approximate length
+  (if (getvar "REVCLOUDAPPROXARCLEN")
+      (setvar 'REVCLOUDAPPROXARCLEN 10))
+  ;; 2020 and earlier – separate min / max
+  (if (getvar "REVCLOUDMINARCLENGTH")
+      (progn
+        (setvar 'REVCLOUDMINARCLENGTH 10)
+        (setvar 'REVCLOUDMAXARCLENGTH 10)))     ; keep max = min
+  ;; Turn variance OFF (0 = uniform arcs)
+  (if (getvar "REVCLOUDARCVARIANCE")
+      (setvar 'REVCLOUDARCVARIANCE 0))
+)
+
+;; Run once when this file is loaded
+(set-revcloud-arc-10)
+
+;; Run again whenever a new drawing opens
+(defun s::startup ( / )
+  (set-revcloud-arc-10)
+)
+
 ;; Obsolete initialization (if any) has been removed. 
 ;; For example, menu loading was done here in older version (no longer needed):
 ;; (if (not (menugroup "UTILS")) (loadmenu "UTILS"))  ; *** Removed: use CUI to load custom menus if needed ***
@@ -67,14 +94,12 @@ Returns the angle measured from East (0° East, counter-clockwise positive) as a
       (if (vl-string-search "'" str)
         (setq min (atof (substr str (+ 2 (vl-string-search "d" str))
                                  (- (or (vl-string-search "'" str) (1- (strlen str)))
-                                    (1+ (vl-string-search "d" str))))))
-      )
+                                    (1+ (vl-string-search "d" str)))))))
       ;; Seconds (if any, after "'" up to "\"")
       (if (vl-string-search "\"" str)
         (setq sec (atof (substr str (+ 2 (vl-string-search "'" str))
                                  (- (vl-string-search "\"" str)
-                                    (1+ (vl-string-search "'" str))))))
-      )
+                                    (1+ (vl-string-search "'" str)))))))
       (setq partAngle (+ deg (/ min 60.0) (/ sec 3600.0)))
     )
     ;; If no 'd' in string, interpret entire numeric part as decimal degrees
@@ -85,13 +110,11 @@ Returns the angle measured from East (0° East, counter-clockwise positive) as a
     ((= (substr bearStr 1 1) "N")
       (if (= (substr bearStr (strlen bearStr) 1) "E")
           (setq azDeg partAngle)
-          (setq azDeg (if (zerop partAngle) 360.0 (- 360.0 partAngle))))
-    )
+          (setq azDeg (if (zerop partAngle) 360.0 (- 360.0 partAngle)))))
     ((= (substr bearStr 1 1) "S")
       (if (= (substr bearStr (strlen bearStr) 1) "E")
           (setq azDeg (- 180.0 partAngle))
-          (setq azDeg (+ 180.0 partAngle)))
-    )
+          (setq azDeg (+ 180.0 partAngle))))
   )
   (if (>= azDeg 360.0) (setq azDeg (- azDeg 360.0)))  ; normalize 360 to 0
   ;; Convert azimuth (from North CW) to AutoCAD angle (from East CCW) and return in radians
@@ -107,20 +130,15 @@ The input angle is assumed to be measured from East (0 at East, CCW positive)."
   ;; Determine quadrant and internal angleD (0 to 90 degrees within that quadrant)
   (cond
     ((or (>= degN 360.0) (< degN 1e-8))  ; close to 0 or 360 -> due North
-      (setq firstChar "N" secondChar "E" angleD 0.0)  ; represent as N0°0'0"E (due North)
-    )
+      (setq firstChar "N" secondChar "E" angleD 0.0))  ; represent as N0°0'0"E (due North)
     ((<= degN 90.0)
-      (setq firstChar "N" secondChar "E" angleD degN)
-    )
+      (setq firstChar "N" secondChar "E" angleD degN))
     ((<= degN 180.0)
-      (setq firstChar "S" secondChar "E" angleD (- 180.0 degN))
-    )
+      (setq firstChar "S" secondChar "E" angleD (- 180.0 degN)))
     ((< degN 270.0)
-      (setq firstChar "S" secondChar "W" angleD (- degN 180.0))
-    )
+      (setq firstChar "S" secondChar "W" angleD (- degN 180.0)))
     (T
-      (setq firstChar "N" secondChar "W" angleD (- 360.0 degN))
-    )
+      (setq firstChar "N" secondChar "W" angleD (- 360.0 degN)))
   )
   ;; Format the angleD (0-90) as degrees/minutes/seconds string
   (setq bearingStr (angtos (deg2rad angleD) 1 0))  ; e.g., "45d30'0\""
@@ -168,8 +186,7 @@ The input angle is assumed to be measured from East (0 at East, CCW positive)."
         )
       )
     )
-    (princ "\nInvalid selection. Please select a LINE object.")
-  )
+    (princ "\nInvalid selection. Please select a LINE object."))
   (princ)
 )
 
@@ -181,10 +198,8 @@ The input angle is assumed to be measured from East (0 at East, CCW positive)."
     (progn
       (setq obj (vlax-ename->vla-object ent)
             newObj (vla-copy obj))  ; copy the object (modern equivalent of entmake clone)
-      (princ "\nEntity cloned.")
-    )
-    (princ "\nNo entity selected.")
-  )
+      (princ "\nEntity cloned."))
+    (princ "\nNo entity selected."))
   (princ)
 )
 
@@ -196,10 +211,8 @@ The input angle is assumed to be measured from East (0 at East, CCW positive)."
     (progn
       (setq layerName (cdr (assoc 8 (entget ent))))
       (setvar 'CLAYER layerName)
-      (princ (strcat "\nCurrent layer set to " layerName))
-    )
-    (princ "\nNo object selected.")
-  )
+      (princ (strcat "\nCurrent layer set to " layerName)))
+    (princ "\nNo object selected."))
   (princ)
 )
 
@@ -209,27 +222,21 @@ The input angle is assumed to be measured from East (0 at East, CCW positive)."
     (progn
       (setq layerName (getstring "\nEnter target layer name: "))
       (if (or (null layerName) (= layerName ""))
-        (progn (princ "\nNo layer name provided.") (return))
-      )
+        (progn (princ "\nNo layer name provided.") (return)))
       (setq layerName (strcase layerName))  ; normalize layer name
       ;; Create layer if it doesn't exist
       (if (not (tblsearch "LAYER" layerName))
         (progn
           (vla-add (vla-get-Layers (vla-get-ActiveDocument (vlax-get-acad-object))) layerName)
-          (princ (strcat "\n** Created new layer: " layerName " **"))
-        )
-      )
+          (princ (strcat "\n** Created new layer: " layerName " **"))))
       ;; Move each selected entity to the target layer
       (repeat (sslength ss)
         (setq ent (ssname ss 0)
               ss  (ssdel ent ss)
               obj (vlax-ename->vla-object ent))
-        (vla-put-Layer obj layerName)
-      )
-      (princ (strcat "\nMoved selected object(s) to layer " layerName "."))
-    )
-    (princ "\nNo objects selected.")
-  )
+        (vla-put-Layer obj layerName))
+      (princ (strcat "\nMoved selected object(s) to layer " layerName ".")))
+    (princ "\nNo objects selected."))
   (princ)
 )
 
@@ -239,27 +246,21 @@ The input angle is assumed to be measured from East (0 at East, CCW positive)."
     (progn
       (setq layerName (getstring "\nEnter target layer name: "))
       (if (or (null layerName) (= layerName ""))
-        (progn (princ "\nNo layer name provided.") (return))
-      )
+        (progn (princ "\nNo layer name provided.") (return)))
       (setq layerName (strcase layerName))
       (if (not (tblsearch "LAYER" layerName))
         (progn
           (vla-add (vla-get-Layers (vla-get-ActiveDocument (vlax-get-acad-object))) layerName)
-          (princ (strcat "\n** Created new layer: " layerName " **"))
-        )
-      )
+          (princ (strcat "\n** Created new layer: " layerName " **"))))
       ;; Copy each entity and assign it to the target layer
       (repeat (sslength ss)
         (setq ent (ssname ss 0)
               ss  (ssdel ent ss)
               obj (vlax-ename->vla-object ent)
               newObj (vla-copy obj))
-        (vla-put-Layer newObj layerName)
-      )
-      (princ (strcat "\nCopied selected object(s) to layer " layerName "."))
-    )
-    (princ "\nNo objects selected.")
-  )
+        (vla-put-Layer newObj layerName))
+      (princ (strcat "\nCopied selected object(s) to layer " layerName ".")))
+    (princ "\nNo objects selected."))
   (princ)
 )
 
@@ -271,10 +272,8 @@ The input angle is assumed to be measured from East (0 at East, CCW positive)."
       (setq layName (cdr (assoc 8 (entget ent))))
       ;; Use -LAYER command to freeze (preferred over legacy loadmenu/menucmd methods)
       (command "-layer" "freeze" layName "") 
-      (princ (strcat "\nLayer \"" layName "\" has been frozen."))
-    )
-    (princ "\nNo object selected.")
-  )
+      (princ (strcat "\nLayer \"" layName "\" has been frozen.")))
+    (princ "\nNo object selected."))
   (princ)
 )
 
@@ -286,10 +285,8 @@ The input angle is assumed to be measured from East (0 at East, CCW positive)."
       (setq layName (cdr (assoc 8 (entget ent)))
             layerObj (vla-item (vla-get-Layers (vla-get-ActiveDocument (vlax-get-acad-object))) layName))
       (vla-put-Lock layerObj :vlax-true)
-      (princ (strcat "\nLayer \"" layName "\" is now locked."))
-    )
-    (princ "\nNo object selected.")
-  )
+      (princ (strcat "\nLayer \"" layName "\" is now locked.")))
+    (princ "\nNo object selected."))
   (princ)
 )
 
@@ -301,10 +298,8 @@ The input angle is assumed to be measured from East (0 at East, CCW positive)."
       (setq layName (cdr (assoc 8 (entget ent)))
             layerObj (vla-item (vla-get-Layers (vla-get-ActiveDocument (vlax-get-acad-object))) layName))
       (vla-put-Lock layerObj :vlax-false)
-      (princ (strcat "\nLayer \"" layName "\" is now unlocked."))
-    )
-    (princ "\nNo object selected.")
-  )
+      (princ (strcat "\nLayer \"" layName "\" is now unlocked.")))
+    (princ "\nNo object selected."))
   (princ)
 )
 
@@ -322,22 +317,18 @@ Handles single-line text, MText, attributes, and attribute definitions."
         (setq textVal 
               (if (= type "AcDbMText")
                 (vla-get-Contents obj)
-                (vla-get-TextString obj)
-              ))
+                (vla-get-TextString obj)))
         ;; Convert variant to string if necessary, then to uppercase
         (setq textVal (strcase (if (vlax-variant-p textVal) (vlax-variant-value textVal) textVal)))
         ;; Set the text content back
         (if (= type "AcDbMText")
           (vla-put-Contents obj textVal)
-          (vla-put-TextString obj textVal)
-        )
-      )
+          (vla-put-TextString obj textVal)))
       (princ "\nSelected text has been converted to UPPERCASE.")
       ;; Note: Uppercasing MText will also uppercase any formatting codes (e.g., \\L and \\l for underline),
       ;; which may affect text formatting.
     )
-    (princ "\nNo text entities selected.")
-  )
+    (princ "\nNo text entities selected."))
   (princ)
 )
 

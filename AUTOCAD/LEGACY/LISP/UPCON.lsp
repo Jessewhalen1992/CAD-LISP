@@ -1,18 +1,22 @@
 ;====================================================================
 ; UPCON.LSP – Connect Z-DESCRIPTION notes to Z-POINTNUMBERs
 ; rev 2025-07-14 – removed WHEN, exact matching, optional 3DPOLY
+; rev 2025-07-25 – helper renamed to avoid DLL clash
 ;====================================================================
 
 (vl-load-com)
 
-;; Transform World coordinates → Current UCS
-(defun l+transw2c (pt)
+;; -------------------  helper  -------------------
+;;  World → Current UCS  (renamed from L+TRANSW2C)
+;;  ------------------------------------------------
+(defun upcon-transw2c   ; ► new unique name
+       (pt)             ;   still takes one argument
   (trans pt 0 1)
 )
 
-(defun c:UPCON ( / upcon-error upcon-old-error kw xyz dEnt dStr dPt
-                   ssDesc pairL dupSel n pr chosen
-                   vtxL coord el i pt)
+(defun c:UPCON
+       ( / upcon-error upcon-old-error kw xyz dEnt dStr dPt
+          ssDesc pairL dupSel n pr chosen vtxL coord el i pt)
 
   ;; Generic error handler
   (defun upcon-error (msg)
@@ -91,6 +95,7 @@
                          (cons 8 "Z-POINTNUMBER")
                          (cons -4 "=,=")
                          (cons 10 (cdr (assoc 10 el))))))
+
     (if (and dupSel (> (sslength dupSel) 0))
       (progn
         (setq n     (atoi (cdr (assoc 1 (entget (ssname dupSel 0))))))
@@ -110,20 +115,22 @@
       (progn (prompt "\nFewer than two unique point-numbers.") (exit)))
 
   ;; STEP 5: build vertex list with or without Z
-    (setq vtxL '())
-    (foreach pr chosen
-      (setq coord
-            (if xyz
-                (ax-upcon-getCoord (itoa (car pr)) (cdr pr))
-                (progn
-                  (setq pt (cdr pr))
-                  (if (and pt (>= (length pt) 2))
-                      (list (car pt) (cadr pt) 0.0)
-                      (progn
-                        (princ (strcat "\nWarning: Invalid point data for number " (itoa (car pr))))
-                        nil)))))
+  (setq vtxL '())
+  (foreach pr chosen
+    (setq coord
+          (if xyz
+              (ax-upcon-getCoord (itoa (car pr)) (cdr pr))
+              (progn
+                (setq pt (cdr pr))
+                (if (and pt (>= (length pt) 2))
+                    (list (car pt) (cadr pt) 0.0)
+                    (progn
+                      (princ (strcat "\nWarning: Invalid point data for number " (itoa (car pr))))
+                      nil)))))
     (if coord
-      (setq vtxL (cons (l+transw2c coord) vtxL))))
+      (setq vtxL
+            (cons (upcon-transw2c coord)   ; ► renamed call here
+                  vtxL))))
   (setq vtxL (reverse vtxL))
   (if (< (length vtxL) 2)
       (progn (prompt "\nInsufficient valid vertices – nothing drawn.") (exit)))

@@ -16,7 +16,6 @@
     "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/FNC"
     "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/Freehold Area Calcs"
     "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/Hybrid format table"
-    "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/Induction FormatTable"
     "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/iop maker"
     "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/metersToFeet"
     "C:/Users/Jesse 2025/Desktop/CAD-LISP/AUTOCAD/LEGACY/LISP/Perpendicular Tolerance Check v2"
@@ -38,7 +37,7 @@
   :TMP-DIRECTORY
   nil
   :PROJECT-KEYS
-  (:BUILD (:standard))
+  (:BUILD (:standard) :MERGED T :SAFE-MODE T :MSGLEVEL 1)
   :CONTEXT-ID
   :AUTOLISP
 )
